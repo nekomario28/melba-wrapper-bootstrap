@@ -1,12 +1,16 @@
 # melba-wrapper-bootstrap
 
 An independent bootstrap for the **user-supplied** decrypt service used by
-[Melba](https://github.com/nekomario28/apple-music-linux) for Apple Music
+[Melba](https://github.com/nekomario28/melba) for Apple Music
 lossless (ALAC) playback.
 
-This repository contains only a pinned download/staging script and its small
-credential-scrubbing shim. It does **not** contain a wrapper payload, a rootfs,
-an APK, Apple/Android libraries, keys, account data or a service binary.
+This repository is **public and source-only**. It contains a pinned
+download/staging script and its small credential-scrubbing shim. It does **not**
+contain a wrapper payload, a rootfs, an APK, Apple/Android libraries, keys,
+account data or a service binary.
+
+The script downloads the upstream bundle locally at the user's direction; this
+repository does not redistribute it.
 
 ## What it stages
 
@@ -18,11 +22,15 @@ an APK, Apple/Android libraries, keys, account data or a service binary.
 
 The release URL is a mutable `.latest` tag; the script refuses to stage it
 unless its SHA-256 matches the pin recorded in `install-wrapper.sh` (measured
-2026-10-19). A changed upstream build requires a deliberate pin update.
+2026-10-19, re-verified 2026-10-26). A changed upstream build requires a
+deliberate pin update.
 
 ## Use with Melba
 
 ```sh
+git clone https://github.com/nekomario28/melba-wrapper-bootstrap
+cd melba-wrapper-bootstrap
+
 # 1. stage the supported bundle (explicit; nothing runs automatically)
 ./install-wrapper.sh
 
@@ -44,6 +52,10 @@ build. No APK is downloaded. The APK's ABI must match the rootfs.
 `bash`, `curl`, `unzip`, `file`, and a C compiler (`cc`) for `argv-scrub.so`.
 An active Apple Music subscription and a real Apple ID are required for the
 service to be useful. Root/sudo is not required.
+
+Staging is not playback. ALAC also needs a successful wrapper login, a running
+loopback service, and Melba's `music-user-token`; this repository does not grant
+Apple Music access or guarantee that an upstream build works on every host.
 
 ## Security
 
@@ -74,10 +86,12 @@ WorldObservationLog/wrapper bundle.
 
 - `install-wrapper.sh` — pinned staging script
 - `argv-scrub.c` — freestanding login-argv scrub shim
+- `NOTICE.md` — upstream/rootfs boundary
 - `LICENSE` — MIT for this repository's scripts
 
 ## Publication
 
-This repository is currently **private**; see [PUBLICATION.md](PUBLICATION.md).
-Before any public release, run `ci/check.sh` and complete that checklist. The
-script is local and does not fetch anything.
+Public, source-only: <https://github.com/nekomario28/melba-wrapper-bootstrap>.
+See [PUBLICATION.md](PUBLICATION.md) for the exact boundary. `ci/check.sh`
+rejects payloads, credentials, personal paths and archive magic. The script
+fetches only when the user runs it; nothing is fetched by CI or by this repo.

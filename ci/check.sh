@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
-for f in README.md LICENSE SECURITY.md PUBLICATION.md install-wrapper.sh argv-scrub.c; do
+for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install-wrapper.sh argv-scrub.c; do
     [ -f "$f" ] || fail "missing $f"
 done
 [ -x install-wrapper.sh ] || fail "install-wrapper.sh is not executable"
@@ -34,7 +34,7 @@ for f in $(find . -path ./.git -prune -o -type f -print); do
 done
 
 # Personal absolute paths and private keys in the text files that ship.
-for f in README.md LICENSE SECURITY.md PUBLICATION.md install-wrapper.sh argv-scrub.c; do
+for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install-wrapper.sh argv-scrub.c; do
     grep -Eq '/home/[A-Za-z0-9._-]+/|/Users/[A-Za-z0-9._-]+/' "$f" && fail "personal absolute path in $f"
     grep -Eq 'BEGIN [A-Z ]*PRIVATE KEY' "$f" && fail "private key material in $f"
 done

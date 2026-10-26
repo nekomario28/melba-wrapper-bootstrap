@@ -1,22 +1,24 @@
 # Publication status
 
-**Private.** This is a local repository, branch `main`, with no remote and no
-GitHub repository. It is not published.
+**Public, source-only** since 2026-10-26.
 
-Publication is planned later, after an explicit decision.
+- Repository: <https://github.com/nekomario28/melba-wrapper-bootstrap>
+- Branch: `main`
+- The tree contains scripts only; the upstream bundle is fetched locally by the
+  user and is never committed here.
 
-## Before making it public
+## Checks completed
 
-- [ ] Choose the owner/repository name and public/private visibility.
-- [ ] Re-read `README.md`, `SECURITY.md`, `LICENSE` and this file.
-- [ ] Confirm the tree contains no rootfs, APK, Apple/Android library, key,
-      account database or wrapper log (`ci/check.sh`).
-- [ ] Re-check the pinned release SHA-256 and tzdata pin against upstream.
-- [ ] Decide whether the MIT license and attribution are final.
-- [ ] Run `ci/check.sh` and `bash -n install-wrapper.sh`.
-- [ ] Obtain an explicit publish instruction; add a remote and push only then.
-- [ ] After the repository exists, link it from Melba's `docs/wrapper.md`; do
-      not put a guessed URL there before then.
+- [x] Explicit publish decision from the repository owner.
+- [x] `README.md`, `SECURITY.md`, `LICENSE` and this file reviewed for the public
+      boundary.
+- [x] Tree contains no rootfs, APK, Apple/Android library, key, account
+      database or wrapper log (`ci/check.sh`).
+- [x] Pinned release SHA-256 for x86_64/arm64 and the tzdata pin re-checked
+      against upstream on 2026-10-26 (all three matched).
+- [x] MIT license and attribution are final for this repository's scripts.
+- [x] `ci/check.sh` and `bash -n install-wrapper.sh` pass.
+- [x] Repository made public and a source-only release published.
 
 ## What must not ship
 
