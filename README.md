@@ -25,27 +25,38 @@ unless its SHA-256 matches the pin recorded in `install-wrapper.sh` (measured
 2026-10-19, re-verified 2026-10-26). A changed upstream build requires a
 deliberate pin update.
 
-## Use with Melba
+## One-command install
 
-Install Melba **first**; this repository only stages the external service. See
-Melba's [Install section](https://github.com/nekomario28/melba#install) for the
-build dependencies and `sh packaging/install.sh`.
+Install the prerequisites from Melba's [Install section](https://github.com/nekomario28/melba#install),
+then run:
 
 ```sh
-# 0. if Melba is not installed yet:
-git clone https://github.com/nekomario28/melba
-cd melba
-sh packaging/install.sh
-cd ..
+git clone https://github.com/nekomario28/melba-wrapper-bootstrap && cd melba-wrapper-bootstrap && ./install.sh
+```
 
-# 1. stage the supported bundle (explicit; nothing runs automatically)
-git clone https://github.com/nekomario28/melba-wrapper-bootstrap
-cd melba-wrapper-bootstrap
+The installer:
+
+1. installs Melba from source if `melba` / `melbad` are not already present;
+2. runs the pinned wrapper staging via `install-wrapper.sh`;
+3. prints read-only `wrapper status` and `auth status`;
+4. launches Melba when a graphical session is available.
+
+Useful options:
+
+```sh
+./install.sh --dry-run       # print the plan, change nothing
+./install.sh --no-launch     # install only; do not start the GUI
+./install.sh --wrapper-only  # stage the wrapper without touching Melba
+./install.sh --update        # refresh a cached Melba checkout and reinstall
+```
+
+The GUI sign-in still requires your own Apple ID, MFA and subscription. The
+installer never asks for or stores those credentials.
+
+Manual wrapper-only staging is still available:
+
+```sh
 ./install-wrapper.sh
-
-# 2. launch the installed app and use its GUI sign-in
-#    (use the desktop entry or absolute path if it is not on PATH)
-melba
 ```
 
 Melba detects the staged managed service and starts it automatically when an
@@ -62,14 +73,16 @@ starts the managed service. The normal GUI sign-in creates `music-user-token`;
 do not copy, print or pass a token manually. A separate CLI password prompt is
 not required.
 
-`--apk FILE` is an optional **local** override for a different Apple Music
-build. No APK is downloaded. The APK's ABI must match the rootfs.
+`install-wrapper.sh --apk FILE` is an optional **local** override for a
+different Apple Music build. No APK is downloaded. The APK's ABI must match the rootfs.
 
 ## Requirements
 
-`bash`, `curl`, `unzip`, `file`, and a C compiler (`cc`) for `argv-scrub.so`.
-An active Apple Music subscription and a real Apple ID are required for the
-service to be useful. Root/sudo is not required.
+`git`, `curl`, `unzip`, `file`, a C compiler (`cc`) for `argv-scrub.so`,
+`cargo`, `cargo-about`, `pkg-config` and Melba's build dependencies (see
+Melba's Install section). An active Apple Music subscription and a real Apple
+ID are required for the service to be useful. Root/sudo is not required; the
+installer does not install OS packages.
 
 Staging is not playback. ALAC also needs a successful wrapper login, a running
 loopback service, and Melba's `music-user-token`; this repository does not grant
@@ -102,6 +115,7 @@ WorldObservationLog/wrapper bundle.
 
 ## Files
 
+- `install.sh` — one-shot Melba + wrapper installer
 - `install-wrapper.sh` — pinned staging script
 - `argv-scrub.c` — freestanding login-argv scrub shim
 - `NOTICE.md` — upstream/rootfs boundary

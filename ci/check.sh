@@ -6,10 +6,12 @@ cd "$(dirname "$0")/.."
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
-for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install-wrapper.sh argv-scrub.c; do
+for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install.sh install-wrapper.sh argv-scrub.c; do
     [ -f "$f" ] || fail "missing $f"
 done
+[ -x install.sh ] || fail "install.sh is not executable"
 [ -x install-wrapper.sh ] || fail "install-wrapper.sh is not executable"
+bash -n install.sh || fail "install.sh syntax"
 bash -n install-wrapper.sh || fail "install-wrapper.sh syntax"
 
 for pin in SHA256_x86_64 SHA256_arm64 TZDATA_SHA256; do
@@ -34,7 +36,7 @@ for f in $(find . -path ./.git -prune -o -type f -print); do
 done
 
 # Personal absolute paths and private keys in the text files that ship.
-for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install-wrapper.sh argv-scrub.c; do
+for f in README.md LICENSE SECURITY.md PUBLICATION.md NOTICE.md install.sh install-wrapper.sh argv-scrub.c; do
     grep -Eq '/home/[A-Za-z0-9._-]+/|/Users/[A-Za-z0-9._-]+/' "$f" && fail "personal absolute path in $f"
     grep -Eq 'BEGIN [A-Z ]*PRIVATE KEY' "$f" && fail "private key material in $f"
 done
