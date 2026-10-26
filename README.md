@@ -27,22 +27,40 @@ deliberate pin update.
 
 ## Use with Melba
 
+Install Melba **first**; this repository only stages the external service. See
+Melba's [Install section](https://github.com/nekomario28/melba#install) for the
+build dependencies and `sh packaging/install.sh`.
+
 ```sh
-git clone https://github.com/nekomario28/melba-wrapper-bootstrap
-cd melba-wrapper-bootstrap
+# 0. if Melba is not installed yet:
+git clone https://github.com/nekomario28/melba
+cd melba
+sh packaging/install.sh
+cd ..
 
 # 1. stage the supported bundle (explicit; nothing runs automatically)
+git clone https://github.com/nekomario28/melba-wrapper-bootstrap
+cd melba-wrapper-bootstrap
 ./install-wrapper.sh
 
-# 2. start Melba and use its GUI sign-in
+# 2. launch the installed app and use its GUI sign-in
+#    (use the desktop entry or absolute path if it is not on PATH)
 melba
 ```
 
 Melba detects the staged managed service and starts it automatically when an
-ALAC track opens; `"wrapper_mode": "managed"` is also accepted but not required.
-Run `melbad wrapper status` to check the staged service.
-The GUI sign-in path is the supported way to provision the wrapper SDK; a
-separate CLI password prompt is not required.
+ALAC track opens; `"wrapper_mode": "managed"` is optional, not required.
+After the GUI sign-in, verify the linkage without printing secrets:
+
+```sh
+melbad wrapper status   # installed dir, binary, key-port state
+melbad auth status      # stored-token status; never the token
+```
+
+`wrapper status` may show `running: no` before the first ALAC; opening an ALAC
+starts the managed service. The normal GUI sign-in creates `music-user-token`;
+do not copy, print or pass a token manually. A separate CLI password prompt is
+not required.
 
 `--apk FILE` is an optional **local** override for a different Apple Music
 build. No APK is downloaded. The APK's ABI must match the rootfs.

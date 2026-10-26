@@ -211,9 +211,9 @@ say "ports bind only after a successful login/provisioning pass."
 say "done. layout:"
 ls "$DIR" | sed 's/^/   /'
 echo
-echo "set \"wrapper_mode\": \"managed\" in ~/.config/melba/config.json —"
-echo "melbad will start the service automatically the first time an ALAC"
-echo "track is opened, and leave it stopped when ALAC is off."
+echo "optional: set \"wrapper_mode\": \"managed\" in ~/.config/melba/config.json —"
+echo "a staged service is auto-detected without it. melbad starts the service"
+echo "the first time an ALAC track is opened and leaves it stopped when ALAC is off."
 echo "first use also needs an Apple ID once."
 echo "Start melba and use its GUI sign-in; the GUI starts this managed service."
 echo "The optional CLI provisioning path is described in Melba's docs/wrapper.md."
