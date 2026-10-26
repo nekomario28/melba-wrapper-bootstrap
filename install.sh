@@ -42,8 +42,12 @@ while [ $# -gt 0 ]; do
         --dry-run) DRY_RUN=1; shift;;
         --no-launch) LAUNCH=0; shift;;
         --wrapper-only) WRAPPER_ONLY=1; shift;;
-        --melba-src) MELBA_SRC="$2"; shift 2;;
-        --wrapper-dir) WRAPPER_DIR="$2"; shift 2;;
+        --melba-src)
+            [ "$#" -ge 2 ] || { echo "option $1 requires a directory" >&2; usage >&2; exit 2; }
+            MELBA_SRC="$2"; shift 2;;
+        --wrapper-dir)
+            [ "$#" -ge 2 ] || { echo "option $1 requires a directory" >&2; usage >&2; exit 2; }
+            WRAPPER_DIR="$2"; shift 2;;
         --update) UPDATE=1; shift;;
         -h|--help) usage; exit 0;;
         *) echo "unknown option: $1" >&2; usage >&2; exit 2;;
