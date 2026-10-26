@@ -30,8 +30,9 @@ unless its SHA-256 matches the pin recorded in `install-wrapper.sh` (measured
 melba
 ```
 
-Then set `"wrapper_mode": "managed"` in `~/.config/melba/config.json` if it is
-not already set, or run `melbad wrapper status` to check the staged service.
+Melba detects the staged managed service and starts it automatically when an
+ALAC track opens; `"wrapper_mode": "managed"` is also accepted but not required.
+Run `melbad wrapper status` to check the staged service.
 The GUI sign-in path is the supported way to provision the wrapper SDK; a
 separate CLI password prompt is not required.
 
