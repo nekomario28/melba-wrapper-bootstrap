@@ -6,3 +6,11 @@ wrapper-rootless
 run
 *.so
 *.log
+*.apk
+*.pem
+*.key
+*.p12
+*.jks
+AccountTable.json
+UserProfileTable.json
+wrapper-auth.json

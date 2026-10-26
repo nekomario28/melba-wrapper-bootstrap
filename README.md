@@ -75,3 +75,9 @@ WorldObservationLog/wrapper bundle.
 - `install-wrapper.sh` — pinned staging script
 - `argv-scrub.c` — freestanding login-argv scrub shim
 - `LICENSE` — MIT for this repository's scripts
+
+## Publication
+
+This repository is currently **private**; see [PUBLICATION.md](PUBLICATION.md).
+Before any public release, run `ci/check.sh` and complete that checklist. The
+script is local and does not fetch anything.
