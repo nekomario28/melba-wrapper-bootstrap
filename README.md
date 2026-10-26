@@ -34,6 +34,16 @@ then run:
 git clone https://github.com/nekomario28/melba-wrapper-bootstrap && cd melba-wrapper-bootstrap && ./install.sh
 ```
 
+From zero, without a checkout:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/nekomario28/melba-wrapper-bootstrap/main/install.sh | bash
+```
+
+The piped form executes the current `main` installer and then clones a
+source-only bootstrap checkout into a temporary directory. Prefer the clone
+form when you want to review the script first.
+
 The installer:
 
 1. installs Melba from source if `melba` / `melbad` are not already present;

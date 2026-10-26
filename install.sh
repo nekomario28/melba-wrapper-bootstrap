@@ -10,6 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ORIGINAL_ARGS=("$@")
 DRY_RUN=0
 LAUNCH=1
 WRAPPER_ONLY=0
@@ -56,6 +57,19 @@ have() { command -v "$1" >/dev/null 2>&1; }
 need() {
     have "$1" || die "missing '$1'. Install the prerequisites in Melba's README first."
 }
+
+# When this script is piped from curl, the sibling staging files are absent.
+# Fetch the source-only bootstrap into a temporary checkout and run it there.
+if [ ! -f "$SCRIPT_DIR/install-wrapper.sh" ]; then
+    need git
+    tmp="$(mktemp -d)"
+    say "fetching the bootstrap checkout (source-only)"
+    git clone --depth 1 https://github.com/nekomario28/melba-wrapper-bootstrap "$tmp/repo" >/dev/null
+    "$tmp/repo/install.sh" "${ORIGINAL_ARGS[@]}"
+    status=$?
+    rm -rf "$tmp"
+    exit "$status"
+fi
 
 plan() {
     if [ "$DRY_RUN" = 1 ]; then
