@@ -1,0 +1,8 @@
+wrapper.zip
+Wrapper.*.zip
+rootfs/
+wrapper
+wrapper-rootless
+run
+*.so
+*.log
