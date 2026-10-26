@@ -157,7 +157,12 @@ if [ "$DRY_RUN" = 0 ]; then
     fi
 fi
 
-printf '\nDone.\n- Melba:   %s\n- Wrapper: %s\n\nNext:\n  1. Launch Melba and choose "Sign in with Apple Music".\n  2. The GUI sign-in creates music-user-token; do not copy it manually.\n  3. Open an ALAC track; the staged managed service starts on demand.\n' "${MELBA_BIN:-<installed by the Melba installer>}" "$WRAPPER_DIR"
+if [ "$DRY_RUN" = 1 ]; then
+    printf '\nDry run complete; nothing changed.\n'
+else
+    printf '\nDone.\n'
+fi
+printf -- '- Melba:   %s\n- Wrapper: %s\n\nNext:\n  1. Launch Melba and choose "Sign in with Apple Music".\n  2. The GUI sign-in creates music-user-token; do not copy it manually.\n  3. Open an ALAC track; the staged managed service starts on demand.\n' "${MELBA_BIN:-<installed by the Melba installer>}" "$WRAPPER_DIR"
 
 if [ "$LAUNCH" = 1 ] && [ "$DRY_RUN" = 0 ] && [ -n "$MELBA_BIN" ]; then
     if [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then

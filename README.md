@@ -37,7 +37,7 @@ git clone https://github.com/nekomario28/melba-wrapper-bootstrap && cd melba-wra
 From zero, without a checkout:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/nekomario28/melba-wrapper-bootstrap/v1.2.1/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/nekomario28/melba-wrapper-bootstrap/v1.2.2/install.sh | bash
 ```
 
 The piped form executes the current `main` installer and then clones a
