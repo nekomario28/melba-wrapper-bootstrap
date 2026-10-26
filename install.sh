@@ -86,8 +86,9 @@ plan() {
 # Resolve an existing installation without requiring Cargo's bin on PATH.
 find_melba() {
     local root
-    for root in "${CARGO_INSTALL_ROOT:-}" "${CARGO_HOME:-$HOME/.cargo}"; do
+    for root in "${MELBA_PORTABLE_DIR:-$HOME/.local/opt/melba}" "$HOME/.local/bin" "${CARGO_INSTALL_ROOT:-}" "${CARGO_HOME:-$HOME/.cargo}"; do
         [ -n "$root" ] || continue
+        if [ -x "$root/melba" ]; then printf '%s\n' "$root/melba"; return 0; fi
         if [ -x "$root/bin/melba" ]; then printf '%s\n' "$root/bin/melba"; return 0; fi
     done
     if have melba; then command -v melba; return 0; fi
@@ -95,8 +96,9 @@ find_melba() {
 }
 find_melbad() {
     local root
-    for root in "${CARGO_INSTALL_ROOT:-}" "${CARGO_HOME:-$HOME/.cargo}"; do
+    for root in "${MELBA_PORTABLE_DIR:-$HOME/.local/opt/melba}" "$HOME/.local/bin" "${CARGO_INSTALL_ROOT:-}" "${CARGO_HOME:-$HOME/.cargo}"; do
         [ -n "$root" ] || continue
+        if [ -x "$root/melbad" ]; then printf '%s\n' "$root/melbad"; return 0; fi
         if [ -x "$root/bin/melbad" ]; then printf '%s\n' "$root/bin/melbad"; return 0; fi
     done
     if have melbad; then command -v melbad; return 0; fi
